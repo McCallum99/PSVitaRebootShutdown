@@ -4,20 +4,25 @@ set(CMAKE_SYSTEM_NAME "Generic")
 set(CMAKE_C_COMPILER "arm-vita-eabi-gcc")
 set(CMAKE_CXX_COMPILER "arm-vita-eabi-g++")
 
-project(RebootShutdown)
+project(VitaRebootShutdown)
 set(PROJECT_TITLE "Reboot or Shutdown")
 set(TITLE_ID "RBSD00001")
 
 set(CMAKE_C_FLAGS "-Wl,-q -O3 -std=c99")
+
+include_directories(
+  ./common # This is for debugScreenPrintf()
+)
 
 add_executable(${PROJECT_NAME}.elf
 	src/main.c
 )
 
 target_link_libraries(${PROJECT_NAME}.elf
-	-lScePower_stub
-	-lSceCtrl_stub
-	-lSceSysmodule_stub
+	ScePower_stub
+	SceCtrl_stub
+	SceSysmodule_stub
+	SceDisplay_stub
 )
 
 add_custom_target(${PROJECT_NAME}.vpk ALL
