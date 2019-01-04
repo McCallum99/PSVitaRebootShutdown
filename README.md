@@ -4,6 +4,6 @@ This is an app that reboots or powers off your PS Vita depending on what trigger
 To compile, run the following from inside the folder with "CMakeLists.txt": 
 cmake . && make
 
-This is v1.03. 
+This is v1.04. 
 Thanks for using my app! By Mc_Callum_99
 
