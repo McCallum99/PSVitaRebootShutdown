@@ -1,35 +1,49 @@
 cmake_minimum_required(VERSION 2.8)
 
-set(CMAKE_SYSTEM_NAME "Generic")
-set(CMAKE_C_COMPILER "arm-vita-eabi-gcc")
-set(CMAKE_CXX_COMPILER "arm-vita-eabi-g++")
+if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
+  if(DEFINED ENV{VITASDK})
+    set(CMAKE_TOOLCHAIN_FILE "$ENV{VITASDK}/share/vita.toolchain.cmake" CACHE PATH "toolchain file")
+  else()
+    message(FATAL_ERROR "Please define VITASDK to point to your SDK path!")
+  endif()
+endif()
 
 project(VitaRebootShutdown)
-set(PROJECT_TITLE "Reboot or Shutdown")
-set(TITLE_ID "RBSD00001")
+include("${VITASDK}/share/vita.cmake" REQUIRED)
 
-set(CMAKE_C_FLAGS "-Wl,-q -O3 -std=c99")
+set(VITA_APP_NAME "Reboot or Shutdown")
+set(VITA_TITLEID  "RBSD00001")
+set(VITA_VERSION  "01.03")
+
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(VITA_MKSFOEX_FLAGS "${VITA_MKSFOEX_FLAGS} -d PARENTAL_LEVEL=1")
 
 include_directories(
-  ./common # This is for debugScreenPrintf()
+  ./common
 )
 
-add_executable(${PROJECT_NAME}.elf
-	src/main.c
+link_directories(
+  ${CMAKE_CURRENT_BINARY_DIR}
 )
 
-target_link_libraries(${PROJECT_NAME}.elf
+add_executable(${PROJECT_NAME}
+  src/main.c
+)
+
+target_link_libraries(${PROJECT_NAME}
 	ScePower_stub
 	SceCtrl_stub
 	SceSysmodule_stub
 	SceDisplay_stub
 )
 
-add_custom_target(${PROJECT_NAME}.vpk ALL
-	COMMAND vita-elf-create ${PROJECT_NAME}.elf ${PROJECT_NAME}.velf
-	COMMAND vita-make-fself -s ${PROJECT_NAME}.velf eboot.bin
-	COMMAND vita-mksfoex -s TITLE_ID=${TITLE_ID} "${PROJECT_TITLE}" param.sfo
-	COMMAND vita-pack-vpk -s param.sfo -a src/sce_sys/icon0.png=sce_sys/icon0.png -a src/sce_sys/livearea/contents/bg.png=sce_sys/livearea/contents/bg.png -a src/sce_sys/livearea/contents/startup.png=sce_sys/livearea/contents/startup.png -a src/sce_sys/livearea/contents/template.xml=sce_sys/livearea/contents/template.xml -b eboot.bin ${PROJECT_NAME}.vpk
+vita_create_self(${PROJECT_NAME}.self ${PROJECT_NAME})
+vita_create_vpk(${PROJECT_NAME}.vpk ${VITA_TITLEID} ${PROJECT_NAME}.self
+  VERSION ${VITA_VERSION}
+  NAME ${VITA_APP_NAME}
+  FILE sce_sys/icon0.png sce_sys/icon0.png
+  FILE sce_sys/livearea/contents/bg.png sce_sys/livearea/contents/bg.png
+  FILE sce_sys/livearea/contents/startup.png sce_sys/livearea/contents/startup.png
+  FILE sce_sys/livearea/contents/template.xml sce_sys/livearea/contents/template.xml
 )
-
-add_dependencies(${PROJECT_NAME}.vpk ${PROJECT_NAME}.elf)
