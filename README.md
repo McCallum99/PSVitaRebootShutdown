@@ -9,3 +9,5 @@ Thanks for using my app! By Mc_Callum_99
 
 Thank you SilicaAndPina (@VitaDevs) for the help troubleshooting - I'm new to this okay?
 
+(Don't use the CMakeLists.txt in the root folder on 1.05 and above.
+
