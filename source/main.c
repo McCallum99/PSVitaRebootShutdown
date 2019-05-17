@@ -30,10 +30,10 @@ int main(int argc, char *argv[]) {
         vita2d_clear_screen();
 
         /* Display background */
-        vita2d_draw_texture(reset, 0, 0);
-        vita2d_draw_texture(shutdown, 480, 0);
-        vita2d_draw_texture(refresh_database, 0, 372);
-        vita2d_draw_texture(reset_database, 480, 372);
+        vita2d_draw_texture(reset, 480, 0);
+        vita2d_draw_texture(shutdown, 0, 0);
+        vita2d_draw_texture(refresh_database, 480, 372);
+        vita2d_draw_texture(reset_database, 0, 372);
         /*Finish displaying background*/
 
 		vita2d_end_drawing();
@@ -45,17 +45,17 @@ int main(int argc, char *argv[]) {
             fyTouch = (lerp(touch.report[i].y, 1087, 544) - 56.5);
             
             if(fxTouch < 480 && fyTouch < 327){
-				scePowerRequestColdReset();
-			}
-			else if(fxTouch > 480 && fyTouch < 327){
 				scePowerRequestStandby();
 			}
+			else if(fxTouch > 480 && fyTouch < 327){
+				scePowerRequestColdReset();
+			}
 			else if(fxTouch < 480 && fyTouch > 327){
-				sceIoRemove("ux0:/id.dat");
+				sceIoRemove("ur0:/shell/db/app.db");
 				scePowerRequestColdReset();
 			}
 			else if(fxTouch > 480 && fyTouch > 327){
-				sceIoRemove("ur0:/shell/db/app.db");
+				sceIoRemove("ux0:/id.dat");
 				scePowerRequestColdReset();
 			}
 		}

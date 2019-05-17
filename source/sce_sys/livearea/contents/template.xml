@@ -12,7 +12,7 @@
 	<frame id="frame2">
 		<liveitem>
 			<text valign="bottom" align="left" text-align="left" text-valign="top" line-space="3" ellipsis="on">
-				<str color="#00ffff" size="35" bold="on" shadow="on">Reboot or Shutdown</str>
+				<str color="#FFFFFF" size="35" bold="on" shadow="on">Reboot or Shutdown</str>
 			</text>
 		</liveitem>
 	</frame>
@@ -20,7 +20,7 @@
 	<frame id="frame3">
 		<liveitem>
 			<text valign="top" align="left" text-align="left" text-valign="bottom" line-space="2" ellipsis="on">
-				<str size="22" color="#00ffff" shadow="on">by McCallum99</str>
+				<str size="22" color="#FFFFFF" shadow="on">by McCallum99</str>
 			</text>
 		</liveitem>
 	</frame>
@@ -28,7 +28,7 @@
 	<frame id="frame4">
 		<liveitem>
 			<text align="left" text-align="left" word-wrap="off" ellipsis="on">
-				<str size="18" color="#00ffff" shadow="on">v1.07</str>
+				<str size="18" color="#FFFFFF" shadow="on">v1.08</str>
 			</text>
 		</liveitem>
 	</frame>
