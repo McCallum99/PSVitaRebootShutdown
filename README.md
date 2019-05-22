@@ -3,7 +3,7 @@ This is an app that reboots or powers off your PS Vita. Touch the screen to use!
 To compile, run the following from inside the folder with "CMakeLists.txt": 
 cmake . && make
 
-This is v1.07. 
+This is v1.08. 
 Thanks for using my app! By Mc_Callum_99
 
 Thank you SilicaAndPina (@SilicaDevs) for the help troubleshooting previous versions.
